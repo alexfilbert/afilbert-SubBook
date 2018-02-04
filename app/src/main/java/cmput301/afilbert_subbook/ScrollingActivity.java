@@ -48,4 +48,33 @@ public class ScrollingActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void showTotalCharge() {
+        // determines the total monthly charge of all current subscriptions
+
+    }
+
+    public void addSub() {
+
+
+    }
+
+    public void viewSub() {
+
+
+    }
+
+    public void editSub() {
+
+
+
+    }
+
+    public void deleteSub() {
+
+
+
+    }
+
+
 }
