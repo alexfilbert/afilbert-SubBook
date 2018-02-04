@@ -27,4 +27,42 @@ public class Subscription {
         this.comment = comment;
     }
 
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String newName) {
+        if (newName.length() > 20){
+            newName = newName.substring(0, 20);
+        }
+        this.name = newName;
+    }
+
+    public String getComment(){
+        return comment;
+    }
+
+    public void setComment(String newComment) {
+        if (newComment.length() > 20){
+            newComment = newComment.substring(0, 20);
+        }
+        this.comment = newComment;
+    }
+
+    public Date getDate(){
+        return dateStarted;
+    }
+
+    public void setDate(Date newDate) {
+        this.dateStarted = newDate;
+    }
+
+    public Currency getCharge(){
+        return charge;
+    }
+
+    public void setName(Currency newCharge) {
+        this.charge = newCharge;
+    }
+
 }

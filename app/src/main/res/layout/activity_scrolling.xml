@@ -33,10 +33,18 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/MonthlyTotal"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/monthly_total" />
+            android:text="@string/monthly_total"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="TOTAL GOES HERE" />
 
     </android.support.design.widget.AppBarLayout>
 

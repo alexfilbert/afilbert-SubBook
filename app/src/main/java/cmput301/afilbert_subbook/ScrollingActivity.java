@@ -9,7 +9,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 public class ScrollingActivity extends AppCompatActivity {
+
+    private static final String FILENAME = "subscriptions.sav";
+    private ArrayList<Subscription> subList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
