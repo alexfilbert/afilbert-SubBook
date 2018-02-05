@@ -13,11 +13,6 @@
             android:name=".ScrollingActivity"
             android:label="My Subscriptions"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".NewSubscriptionActivity"
@@ -25,6 +20,13 @@
         <activity
             android:name=".EditSubscriptionActivity"
             android:label="Edit Subscription" />
+        <activity
+            android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

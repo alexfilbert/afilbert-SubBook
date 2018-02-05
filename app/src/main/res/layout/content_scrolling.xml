@@ -8,4 +8,8 @@
     tools:context="cmput301.afilbert_subbook.ScrollingActivity"
     tools:showIn="@layout/activity_scrolling">
 
+    <ListView
+        android:id="@+id/subListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </android.support.v4.widget.NestedScrollView>

@@ -11,20 +11,25 @@ public class Subscription {
 
     private String name;
     private String comment;
-    private Date dateStarted;
-    private Currency charge;
+    private String dateStarted;
+    private String charge;
 
-    Subscription(String name, Date dateStarted, Currency charge){
+    Subscription(String name, String dateStarted, String charge){
         this.name = name;
         this.dateStarted = dateStarted;
         this.charge = charge;
     }
 
-    Subscription(String name, Date dateStarted, Currency charge, String comment){
+    Subscription(String name, String dateStarted, String charge, String comment){
         this.name = name;
         this.dateStarted = dateStarted;
         this.charge = charge;
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return this.getName().toString();
     }
 
     public String getName(){
@@ -49,19 +54,19 @@ public class Subscription {
         this.comment = newComment;
     }
 
-    public Date getDate(){
+    public String getDate(){
         return dateStarted;
     }
 
-    public void setDate(Date newDate) {
+    public void setDate(String newDate) {
         this.dateStarted = newDate;
     }
 
-    public Currency getCharge(){
+    public String getCharge(){
         return charge;
     }
 
-    public void setName(Currency newCharge) {
+    public void setCharge(String newCharge) {
         this.charge = newCharge;
     }
 
