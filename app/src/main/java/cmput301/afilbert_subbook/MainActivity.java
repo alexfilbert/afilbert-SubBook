@@ -233,9 +233,7 @@ public class MainActivity extends AppCompatActivity {
         if (!charge.isEmpty()) {
             subList.get(pos).setCharge(charge);
         }
-        if (!comment.isEmpty()) {
             subList.get(pos).setComment(comment);
-        }
         saveInFile();
         arrayAdapter.notifyDataSetChanged();
     }
