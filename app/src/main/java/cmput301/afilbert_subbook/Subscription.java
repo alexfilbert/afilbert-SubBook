@@ -31,7 +31,7 @@ public class Subscription {
 
     @Override
     public String toString() {
-        String dispName = this.getName() +;
+        String dispName = this.getName();
         String dispDate = this.getDate();
         String dispCharge = new BigDecimal(this.getCharge()).setScale(2).toString();
         String dispComment = this.getComment();
@@ -43,6 +43,7 @@ public class Subscription {
 
         //return String.format("%s\t\t\t\t%s\t\t\t\t%1$.2f\t\t\t\t%s", this.getName(), this.getDate(),
         //        Double.parseDouble(this.getCharge()), this.getComment());
+        return dispName + "\t\t" + dispDate + "\t\t" + dispCharge + "\n" + dispComment;
     }
 
     public String getName(){

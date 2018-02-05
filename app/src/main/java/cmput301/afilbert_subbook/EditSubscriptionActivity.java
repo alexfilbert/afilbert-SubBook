@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class EditSubscriptionActivity extends AppCompatActivity {
 
@@ -17,7 +18,21 @@ public class EditSubscriptionActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         FloatingActionButton editsubdone = (FloatingActionButton) findViewById(R.id.editsubdone);
+        String curName = extras.getString("curName");
+        String curDate = extras.getString("curDate");
+        String curCharge = extras.getString("curCharge");
+        String curComment = extras.getString("curComment");
         final int position = extras.getInt("position");
+
+        TextView subNameDisplay = (TextView) findViewById(R.id.SubNameField);
+        subNameDisplay.setText(curName);
+        TextView subDateDisplay = (TextView) findViewById(R.id.SubDateField);
+        subDateDisplay.setText(curDate);
+        TextView subChargeDisplay = (TextView) findViewById(R.id.SubChargeField);
+        subChargeDisplay.setText(curCharge);
+        TextView subCommentDisplay = (TextView) findViewById(R.id.SubCommentField);
+        subCommentDisplay.setText(curComment);
+
         final EditText subNameField = (EditText) findViewById(R.id.SubNameField);
         final EditText subDateField = (EditText) findViewById(R.id.SubDateField);
         final EditText subChargeField = (EditText) findViewById(R.id.SubChargeField);

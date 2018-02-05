@@ -9,4 +9,8 @@
     <string name="start_date">Start Date</string>
     <string name="monthly_charge">Monthly Charge</string>
     <string name="comments">Comments</string>
+    <string name="nameHint">Name</string>
+    <string name="dateHint">YYYY-MM-DD</string>
+    <string name="chargeHint">0.00</string>
+    <string name="commentHint">Type your comments here.</string>
 </resources>

@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         monthlyChargeDisplay.setText(chargeString);
 
         TextView listDescDisplay = (TextView) findViewById(R.id.listDescription);
-        String listDescr = String.format("%-30s %-20s %-20s", "Name", "Date", "Charge");
+        String listDescr = "Name\t\tDate\t\tCharge";
         listDescDisplay.setText(listDescr);
 
     }
@@ -138,6 +138,10 @@ public class MainActivity extends AppCompatActivity {
         if(item.getTitle()=="Edit"){
             Intent editSub = new Intent(MainActivity.this,EditSubscriptionActivity.class);
             editSub.putExtra("position", info.position);
+            editSub.putExtra("curName", subList.get(info.position).getName());
+            editSub.putExtra("curDate", subList.get(info.position).getDate());
+            editSub.putExtra("curCharge", subList.get(info.position).getCharge());
+            editSub.putExtra("curComment", subList.get(info.position).getComment());
             startActivityForResult(editSub, 2);
         }
         else if(item.getTitle()=="Delete"){
@@ -240,5 +244,11 @@ public class MainActivity extends AppCompatActivity {
         subList.remove(pos);
         saveInFile();
         arrayAdapter.notifyDataSetChanged();
+
+        totalCharge = showTotalCharge();
+        TextView monthlyChargeDisplay = (TextView) findViewById(R.id.chargeTotal);
+        String chargeString = "$" +  new BigDecimal(totalCharge).setScale(2,
+                RoundingMode.HALF_UP).toString();
+        monthlyChargeDisplay.setText(chargeString);
     }
 }
