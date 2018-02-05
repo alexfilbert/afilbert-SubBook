@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class EditSubscriptionActivity extends AppCompatActivity {
+    // Activity which handles user input for editing an active subscription. Parameters are
+    // passed back to MainActivity on click of save button. Boxes are pre-filled with
+    // existing object attributes passed from MainActivity in extras Bundle.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,6 @@ public class EditSubscriptionActivity extends AppCompatActivity {
                 saveSub.putExtra("subDate", subDateField.getText().toString());
                 saveSub.putExtra("subCharge", subChargeField.getText().toString());
                 saveSub.putExtra("subComment", subCommentField.getText().toString());
-                //startActivity(saveSub);
                 setResult(RESULT_OK, saveSub);
                 finish();
             }

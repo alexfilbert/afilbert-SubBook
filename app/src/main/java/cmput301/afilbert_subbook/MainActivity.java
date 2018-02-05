@@ -39,6 +39,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    // MainActivity class that acts as the main menu featuring a listview of all active
+    // subscriptions.
 
     private ListView subListView;
     private Double totalCharge;
@@ -51,9 +53,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("TestTag", "TEST!!!");
-
-
         subListView = (ListView) findViewById(R.id.subListView);
 
         registerForContextMenu(subListView);
@@ -63,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("FABCLICK", "CLICKED!");
-                Intent createNewSub = new Intent(MainActivity.this,NewSubscriptionActivity.class);
+                Intent createNewSub = new Intent(MainActivity.this,
+                        NewSubscriptionActivity.class);
 
                 startActivityForResult(createNewSub, 1);
                 arrayAdapter.notifyDataSetChanged();
@@ -79,12 +79,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("LifeCycle --->", "onStart is called");
 
         loadFromFile();
-        //subList = new ArrayList<Subscription>();
 
-        //Subscription S1 = new Subscription("Test1", "01-01-2018", "69.99", "This is a test");
-        //Subscription S2 = new Subscription("Test2", "01-01-2018", "69.99", "This is also a test");
-
-        //ListView subListView = (ListView) findViewById(R.id.subListView);
         arrayAdapter = new ArrayAdapter<Subscription>(
                 this,
                 android.R.layout.simple_list_item_1,
@@ -153,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadFromFile() {
+        // Load the subscription list from a file to allow for persistence.
 
         try {
             FileInputStream fis = openFileInput(FILENAME);
@@ -173,13 +169,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Save tweets to file
-     *
-     * @throws RuntimeException there was a problem writing to the file
-     */
-
     private void saveInFile() {
+        // Save the subscription list to a file to allow for persistence.
+
         try {
 
             FileOutputStream fos = openFileOutput(FILENAME,
@@ -200,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Double showTotalCharge() {
-        // Determines the total monthly charge of all current subscriptions
+        // Determines the total monthly charge of all current subscriptions.
         Double monthlyTotal = new Double(0.00);
         for (int i = 0; i < subList.size(); i++) {
             Log.d("CHARGECOUNT", "Total is currently" + monthlyTotal);
@@ -212,18 +204,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addSub(String name, String date, String charge, String comment) {
-        Log.d("SUBINFO", name + date + charge + comment);
+        // Creates a new subscription using data entered in the NewSubscriptionActivity.
+
         Subscription newSub = new Subscription(name, date, charge, comment);
 
         subList.add(newSub);
         saveInFile();
         arrayAdapter.notifyDataSetChanged();
-        //finish();
-        //startActivity(getIntent());
-        Log.d("SUBLISTSIZE", "List size = " + subList.size());
     }
 
     public void editSub(int pos, String name, String date, String charge, String comment) {
+        // Edits an active subscription using data entered in the EditSubscriptionActivity.
         if (!name.isEmpty()) {
             subList.get(pos).setName(name);
         }
@@ -239,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deleteSub(int pos) {
+        // Deletes a subscription from the subscription list and refreshes the monthly total.
         subList.remove(pos);
         saveInFile();
         arrayAdapter.notifyDataSetChanged();

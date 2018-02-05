@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 
 public class NewSubscriptionActivity extends AppCompatActivity {
+    // Activity which handles user input for the creation of a new subscription. Parameters are
+    // passed back to MainActivity on click of save button.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +27,11 @@ public class NewSubscriptionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Save new subscription
 
-                //Intent saveSub = new Intent(NewSubscriptionActivity.this, ScrollingActivity.class);
                 Intent saveSub = new Intent();
                 saveSub.putExtra("subName", subNameField.getText().toString());
                 saveSub.putExtra("subDate", subDateField.getText().toString());
                 saveSub.putExtra("subCharge", subChargeField.getText().toString());
                 saveSub.putExtra("subComment", subCommentField.getText().toString());
-                //startActivity(saveSub);
                 setResult(RESULT_OK, saveSub);
                 finish();
             }

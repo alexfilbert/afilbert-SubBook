@@ -10,6 +10,8 @@ import java.util.Date;
  */
 
 public class Subscription {
+    // Subscription class that represents a subscription object and provides the functionality
+    // needed to get and set Subscription attributes.
 
     private String name;
     private String comment;
@@ -17,12 +19,14 @@ public class Subscription {
     private String charge;
 
     Subscription(String name, String dateStarted, String charge){
+        // Constructor without comment.
         this.name = name;
         this.dateStarted = dateStarted;
         this.charge = charge;
     }
 
     Subscription(String name, String dateStarted, String charge, String comment){
+        // Constructor with comment.
         this.name = name;
         this.dateStarted = dateStarted;
         this.charge = charge;
@@ -31,26 +35,22 @@ public class Subscription {
 
     @Override
     public String toString() {
+        // Determines output format in list view of each subscription object. This could use some
+        // work as the format is currently not aligned.
         String dispName = this.getName();
         String dispDate = this.getDate();
         String dispCharge = new BigDecimal(this.getCharge()).setScale(2).toString();
         String dispComment = this.getComment();
-        //String output = this.getName() + " " + this.getDate() + " " +
-        //        new BigDecimal(this.getCharge()).setScale(2) + " " + this.getComment();
-        //return String.format("%-30s %-20s %-20s\n%-30s", this.getName(),  this.getDate(),
-        //        new BigDecimal(this.getCharge()).setScale(2, RoundingMode.HALF_UP),
-        //        this.getComment());
-
-        //return String.format("%s\t\t\t\t%s\t\t\t\t%1$.2f\t\t\t\t%s", this.getName(), this.getDate(),
-        //        Double.parseDouble(this.getCharge()), this.getComment());
         return dispName + "\t\t" + dispDate + "\t\t" + dispCharge + "\n" + dispComment;
     }
 
     public String getName(){
         return name;
     }
+    // Return name of current subscription object.
 
     public void setName(String newName) {
+        // Set name of current subscription object.
         if (newName.length() > 20){
             newName = newName.substring(0, 20);
         }
@@ -60,8 +60,10 @@ public class Subscription {
     public String getComment(){
         return comment;
     }
+    // Return comment of current subscription object.
 
     public void setComment(String newComment) {
+        // Set comment of current subscription object.
         if (newComment.length() > 20){
             newComment = newComment.substring(0, 20);
         }
@@ -71,17 +73,21 @@ public class Subscription {
     public String getDate(){
         return dateStarted;
     }
+    // Return date of current subscription object.
 
     public void setDate(String newDate) {
         this.dateStarted = newDate;
     }
+    // Set date of current subscription object.
 
     public String getCharge(){
         return charge;
     }
+    // Return charge of current subscription object.
 
     public void setCharge(String newCharge) {
         this.charge = newCharge;
     }
+    // Set charge of current subscription object.
 
 }

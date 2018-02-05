@@ -10,11 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ScrollingActivity"
-            android:label="My Subscriptions"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
             android:name=".NewSubscriptionActivity"
             android:label="Create a new Subscription" />
         <activity
