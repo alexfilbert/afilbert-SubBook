@@ -1,5 +1,7 @@
 package cmput301.afilbert_subbook;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Currency;
 import java.util.Date;
 
@@ -29,7 +31,18 @@ public class Subscription {
 
     @Override
     public String toString() {
-        return this.getName().toString();
+        String dispName = this.getName() +;
+        String dispDate = this.getDate();
+        String dispCharge = new BigDecimal(this.getCharge()).setScale(2).toString();
+        String dispComment = this.getComment();
+        //String output = this.getName() + " " + this.getDate() + " " +
+        //        new BigDecimal(this.getCharge()).setScale(2) + " " + this.getComment();
+        //return String.format("%-30s %-20s %-20s\n%-30s", this.getName(),  this.getDate(),
+        //        new BigDecimal(this.getCharge()).setScale(2, RoundingMode.HALF_UP),
+        //        this.getComment());
+
+        //return String.format("%s\t\t\t\t%s\t\t\t\t%1$.2f\t\t\t\t%s", this.getName(), this.getDate(),
+        //        Double.parseDouble(this.getCharge()), this.getComment());
     }
 
     public String getName(){

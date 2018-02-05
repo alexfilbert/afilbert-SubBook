@@ -8,11 +8,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -26,6 +30,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +41,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private ListView subListView;
+    private Double totalCharge;
     private static final String FILENAME = "subscriptions.sav";
     private ArrayList<Subscription> subList;
     private ArrayAdapter<Subscription> arrayAdapter;
@@ -48,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         subListView = (ListView) findViewById(R.id.subListView);
+
+        registerForContextMenu(subListView);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,10 +81,8 @@ public class MainActivity extends AppCompatActivity {
         loadFromFile();
         //subList = new ArrayList<Subscription>();
 
-        Subscription S1 = new Subscription("Test1", "01-01-2018", "69.99", "This is a test");
-        Subscription S2 = new Subscription("Test2", "01-01-2018", "69.99", "This is also a test");
-        subList.add(S1);
-        subList.add(S2);
+        //Subscription S1 = new Subscription("Test1", "01-01-2018", "69.99", "This is a test");
+        //Subscription S2 = new Subscription("Test2", "01-01-2018", "69.99", "This is also a test");
 
         //ListView subListView = (ListView) findViewById(R.id.subListView);
         arrayAdapter = new ArrayAdapter<Subscription>(
@@ -84,6 +91,16 @@ public class MainActivity extends AppCompatActivity {
                 subList);
 
         subListView.setAdapter(arrayAdapter);
+
+        totalCharge = showTotalCharge();
+        TextView monthlyChargeDisplay = (TextView) findViewById(R.id.chargeTotal);
+        String chargeString = "$" +  new BigDecimal(totalCharge).setScale(2,
+                RoundingMode.HALF_UP).toString();
+        monthlyChargeDisplay.setText(chargeString);
+
+        TextView listDescDisplay = (TextView) findViewById(R.id.listDescription);
+        String listDescr = String.format("%-30s %-20s %-20s", "Name", "Date", "Charge");
+        listDescDisplay.setText(listDescr);
 
     }
 
@@ -97,7 +114,38 @@ public class MainActivity extends AppCompatActivity {
                         data.getStringExtra("subCharge"),
                         data.getStringExtra("subComment"));
             }
+        } else if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                editSub(data.getIntExtra("position", 0), data.getStringExtra("subName"),
+                        data.getStringExtra("subDate"),
+                        data.getStringExtra("subCharge"),
+                        data.getStringExtra("subComment"));
+            }
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        // Based on https://www.javatpoint.com/android-context-menu-example
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Action Menu");
+        menu.add(0, v.getId(), 0, "Edit");
+        menu.add(0, v.getId(), 0, "Delete");
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        if(item.getTitle()=="Edit"){
+            Intent editSub = new Intent(MainActivity.this,EditSubscriptionActivity.class);
+            editSub.putExtra("position", info.position);
+            startActivityForResult(editSub, 2);
+        }
+        else if(item.getTitle()=="Delete"){
+            deleteSub(info.position);
+        }else{
+            return false;
+        }
+        return true;
     }
 
     private void loadFromFile() {
@@ -147,40 +195,50 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showTotalCharge() {
-        // determines the total monthly charge of all current subscriptions
+    public Double showTotalCharge() {
+        // Determines the total monthly charge of all current subscriptions
+        Double monthlyTotal = new Double(0.00);
+        for (int i = 0; i < subList.size(); i++) {
+            Log.d("CHARGECOUNT", "Total is currently" + monthlyTotal);
+            monthlyTotal += Double.parseDouble(subList.get(i).getCharge());
+        }
+
+        return monthlyTotal;
 
     }
 
     public void addSub(String name, String date, String charge, String comment) {
+        Log.d("SUBINFO", name + date + charge + comment);
         Subscription newSub = new Subscription(name, date, charge, comment);
 
         subList.add(newSub);
-        finish();
-        startActivity(getIntent());
-        Log.d("ADDSUB", "ADDED A NEW SUBSCRIPTION!");
+        saveInFile();
+        arrayAdapter.notifyDataSetChanged();
+        //finish();
+        //startActivity(getIntent());
         Log.d("SUBLISTSIZE", "List size = " + subList.size());
     }
 
-    public void viewSub() {
-
-
-    }
-
-    public void editSub() {
-
-
-
-    }
-
-    public void deleteSub(Subscription subToDelete) {
-        for (int i = 0; i < subList.size(); i++) {
-            if (subList.get(i) == subToDelete) {
-                subList.remove(i);
-                break;
-            }
+    public void editSub(int pos, String name, String date, String charge, String comment) {
+        if (!name.isEmpty()) {
+            subList.get(pos).setName(name);
         }
-        finish();
-        startActivity(getIntent());
+        if (!date.isEmpty()) {
+            subList.get(pos).setDate(date);
+        }
+        if (!charge.isEmpty()) {
+            subList.get(pos).setCharge(charge);
+        }
+        if (!comment.isEmpty()) {
+            subList.get(pos).setComment(comment);
+        }
+        saveInFile();
+        arrayAdapter.notifyDataSetChanged();
+    }
+
+    public void deleteSub(int pos) {
+        subList.remove(pos);
+        saveInFile();
+        arrayAdapter.notifyDataSetChanged();
     }
 }
